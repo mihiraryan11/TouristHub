@@ -1,20 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
-</head>
-<body>
-    <h1>All Tourist Spots</h1>
-    <div>
-        <a href="/touristspots/new">Add new tourist spot</a>
-    </div>
-    <ul>
-        <% for(let spot of spots) {%>
-            <li><a href="/touristspots/<%=spot._id%>"><%= spot.title %></a></li>
-        <%}%>
-    </ul>
-</body>
-</html>
+<% layout('layouts/boilerplate')%>
+<h1>All Tourist Spots</h1>
+<div>
+    <a href="/touristspots/new">Add new tourist spot</a>
+</div>
+<ul>
+    <% for(let spot of spots) {%>
+        <li>
+            <a href="/touristspots/<%=spot._id%>"><%= spot.title %></a>
+        </li>
+    <%}%>
+</ul>
