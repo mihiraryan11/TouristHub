@@ -1,15 +1,32 @@
 <% layout('layouts/boilerplate')%>
-<h1>Edit Spot</h1>
-<form action="/touristspots/<%=spot._id%>?_method=PUT" method="POST">
-    <div>
-        <label for="title">Title</label>
-        <input type="text" name="touristspot[title]" id="title" value="<%=spot.title%>">
+<div class="row">
+    <h1 class="text-center">Edit Toruist Spot</h1>
+    <div class="col-6 offset-3">
+        <form action="/touristspots/<%=spot._id%>?_method=PUT" method="POST">
+            <div class="mb-3">
+                <label class="form-label" for="title">Title</label>
+                <input class="form-control" type="text" name="touristspot[title]" id="title" value="<%=spot.title%>">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="location">Location</label>
+                <input class="form-control" type="text" name="touristspot[location]" id="location" value="<%=spot.location%>">
+            </div><div class="mb-3">
+                <label class="form-label" for="image">Image Url</label>
+                <input class="form-control" type="text" name="touristspot[image]" id="image" value="<%=spot.image%>">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="price">Toruist spot Expenses</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="price-label">$</span>
+                    <input type="text" id="price" class="form-control" name="touristspot[price]" placeholder="0.00" aria-label="price" aria-describedby="price-label" value="<%=spot.price%>">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="description">Description</label>
+                <textarea class="form-control" type="text" name="touristspot[description]" id="description"><%=spot.description%></textarea>
+            </div>
+            <div class="mb-3"><button class="btn btn-success">Update Tourist Spot</button></div>
+        </form>
+        <a href="/touristspots/<%=spot._id%>">Back to Spot</a>
     </div>
-    <div>
-        <label for="location">Location</label>
-        <input type="text" name="touristspot[location]" id="location" value="<%=spot.location%>">
-    </div>
-    <button>Update Tourist Spot</button>
-</form>
-
-<a href="/touristspots/<%=spot._id%>">Back to Spot</a>
+</div>
