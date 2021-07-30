@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {TouristSpotsSchema} =require('../schemas.js');
 const catchAsync = require('../utils/catchAsync');
+const {isLoggedIn} = require('../middleware');
 const ExpressError = require('../utils/ExpressError');
 const TouristSpots = require('../models/TouristSpots');
 
@@ -20,11 +21,11 @@ router.get('/',catchAsync(async (req,res)=>{
     res.render('touristspots/index',{spots});
 }))
 
-router.get('/new',(req,res)=>{
+router.get('/new',isLoggedIn,(req,res)=>{
     res.render('touristspots/new');
 })
 
-router.post('/',validateTouristspots,catchAsync(async (req,res,next)=>{
+router.post('/',isLoggedIn,validateTouristspots,catchAsync(async (req,res,next)=>{
     const spot = new TouristSpots(req.body.touristspot);
     await spot.save();
     req.flash('success','Successfully made new tourist-spot!')
@@ -40,7 +41,7 @@ router.get('/:id',catchAsync(async (req,res)=>{
     res.render('touristspots/show',{spot});
 }))
 
-router.get('/:id/edit',catchAsync(async (req,res)=>{
+router.get('/:id/edit',isLoggedIn,catchAsync(async (req,res)=>{
     const spot = await TouristSpots.findById(req.params.id);
     if(!spot){
         req.flash('error','Cannot find that tourist-spot')
@@ -49,14 +50,14 @@ router.get('/:id/edit',catchAsync(async (req,res)=>{
     res.render('touristspots/edit',{spot});
 }))
 
-router.put('/:id',validateTouristspots,catchAsync(async (req,res)=>{
+router.put('/:id',isLoggedIn,validateTouristspots,catchAsync(async (req,res)=>{
     const {id}=req.params;
     const spot = await TouristSpots.findByIdAndUpdate(id,{...req.body.touristspot})
     req.flash('success','Successfully Updated');
     res.redirect(`/touristspots/${spot._id}`);
 }))
 
-router.delete('/:id',catchAsync(async (req,res)=>{
+router.delete('/:id',isLoggedIn,catchAsync(async (req,res)=>{
     const {id}=req.params;
     await TouristSpots.findByIdAndDelete(id)
     req.flash('success','Successfully deleted tourist-spot');
