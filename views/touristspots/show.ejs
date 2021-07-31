@@ -10,8 +10,10 @@
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item text-muted"><%= spot.location %></li>
+              <li class="list-group-item">Submitted by <%= spot.author.username %></li>
               <li class="list-group-item">$ <%= spot.price %></li>
             </ul>
+            <%if(currentUser && spot.author.equals(currentUser._id)){%>
             <div class="card-body">
                 <div class="row justify-content-between">
                     <div class="col-2">
@@ -24,9 +26,11 @@
                     </div>
                   </div>
             </div>
+            <%}%>
           </div>
     </div>
     <div class="col-6">
+      <%if(currentUser){%>
       <h2>Leave a Review</h2>
           <form action="/touristspots/<%=spot._id%>/reviews" method="POST" class="mb-3 validated-form" novalidate>
             <div class="mb-3">
@@ -42,14 +46,18 @@
             </div>
             <button class="btn btn-success">Submit</button>
           </form>
+          <%}%>
           <%for(let review of spot.reviews){%>
             <div class="card mb-3">
               <div class="card-body">
                 <h5 class="card-title">Rating: <%=review.rating%></h5>
+                <h6 class="card-subtitle mb-2 text-muted">-By <%=review.author.username %></h6>
                 <p class="card-text">Review: <%=review.body%></p>
+                <%if(currentUser && review.author.equals(currentUser._id)){%>
                 <form action="/touristspots/<%=spot._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
                   <button class="btn btn-sm btn-danger">Delete</button>
                 </form>
+                <%}%>
               </div>
             </div>
           <%}%>

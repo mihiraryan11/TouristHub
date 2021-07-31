@@ -23,6 +23,7 @@ const seedDB = async () =>{
         const random1467 = Math.floor(Math.random()*1467);
         const price= Math.floor(Math.random() * 300);
         const spot = new TouristSpots({
+            author:'6103ff32ec422c41206ee9b0',
             location:`${cities[random1467].city}, ${cities[random1467].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             image: 'https://source.unsplash.com/collection/483251',
